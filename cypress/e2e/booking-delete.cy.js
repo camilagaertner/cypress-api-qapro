@@ -1,5 +1,5 @@
 describe('API - Deletar agendamento', () => {
-  it('deve criar e excluir um agendamento com autenticação', () => {
+  it('Criar e excluir agendamento com autenticação', () => {
     const payload = {
       firstname: 'Ana',
       lastname: 'Costa',

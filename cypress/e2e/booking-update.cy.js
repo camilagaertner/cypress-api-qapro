@@ -1,8 +1,8 @@
 describe('API - Atualizar agendamento', () => {
-  it('deve atualizar um agendamento criado com autenticação', () => {
+  it('Atualizar agendamento criado com autenticação', () => {
     const createPayload = {
-      firstname: 'Bruno',
-      lastname: 'Lima',
+      firstname: 'Camila',
+      lastname: 'Gaertner',
       totalprice: 120,
       depositpaid: true,
       bookingdates: {
@@ -13,8 +13,8 @@ describe('API - Atualizar agendamento', () => {
     }
 
     const updatePayload = {
-      firstname: 'Bruno',
-      lastname: 'Lima',
+      firstname: 'Camila',
+      lastname: 'Gaertner',
       totalprice: 180,
       depositpaid: false,
       bookingdates: {

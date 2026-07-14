@@ -1,5 +1,5 @@
 describe('API - Login', () => {
-  it('deve autenticar com credenciais válidas', () => {
+  it('Autenticar com credenciais válidas', () => {
     cy.request({
       method: 'POST',
       url: 'https://restful-booker.herokuapp.com/auth',

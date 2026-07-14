@@ -1,8 +1,8 @@
 describe('API - Cadastro de agendamento', () => {
-  it('deve criar um agendamento com sucesso', () => {
+  it('Agendamento com sucesso', () => {
     const payload = {
-      firstname: 'Carlos',
-      lastname: 'Silva',
+      firstname: 'Arthur',
+      lastname: 'Plestch',
       totalprice: 150,
       depositpaid: true,
       bookingdates: {
