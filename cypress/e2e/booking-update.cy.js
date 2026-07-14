@@ -60,4 +60,39 @@ describe('API - Atualizar agendamento', () => {
       })
     })
   })
+
+  it('Falhar ao atualizar um agendamento inexistente', () => {
+    cy.request({
+      method: 'POST',
+      url: 'https://restful-booker.herokuapp.com/auth',
+      body: {
+        username: 'admin',
+        password: 'password123'
+      }
+    }).then((authResponse) => {
+      const token = authResponse.body.token
+
+      cy.request({
+        method: 'PUT',
+        url: 'https://restful-booker.herokuapp.com/booking/999999',
+        headers: {
+          Cookie: `token=${token}`
+        },
+        body: {
+          firstname: 'Camila',
+          lastname: 'Gaertner',
+          totalprice: 180,
+          depositpaid: false,
+          bookingdates: {
+            checkin: '2026-10-02',
+            checkout: '2026-10-06'
+          },
+          additionalneeds: 'Ar-condicionado'
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(405)
+      })
+    })
+  })
 })

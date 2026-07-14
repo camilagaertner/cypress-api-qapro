@@ -27,4 +27,25 @@ describe('API - Cadastro de agendamento', () => {
       expect(response.body.booking.additionalneeds).to.eq(payload.additionalneeds)
     })
   })
+
+  it('Falha ao criar agendamento com payload inválido', () => {
+    const invalidPayload = {
+      firstname: 'Arthur',
+      totalprice: 150,
+      depositpaid: true,
+      bookingdates: {
+        checkin: '2026-08-10',
+        checkout: '2026-08-15'
+      }
+    }
+
+    cy.request({
+      method: 'POST',
+      url: 'https://restful-booker.herokuapp.com/booking',
+      body: invalidPayload,
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.eq(500)
+    })
+  })
 })

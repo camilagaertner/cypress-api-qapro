@@ -50,4 +50,28 @@ describe('API - Deletar agendamento', () => {
       })
     })
   })
+
+  it('Falhar ao excluir um agendamento inexistente', () => {
+    cy.request({
+      method: 'POST',
+      url: 'https://restful-booker.herokuapp.com/auth',
+      body: {
+        username: 'admin',
+        password: 'password123'
+      }
+    }).then((authResponse) => {
+      const token = authResponse.body.token
+
+      cy.request({
+        method: 'DELETE',
+        url: 'https://restful-booker.herokuapp.com/booking/999999',
+        headers: {
+          Cookie: `token=${token}`
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        expect(response.status).to.eq(405)
+      })
+    })
+  })
 })
