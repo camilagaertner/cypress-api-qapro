@@ -14,28 +14,39 @@ describe('API - Deletar agendamento', () => {
 
     cy.request({
       method: 'POST',
-      url: 'https://restful-booker.herokuapp.com/booking',
-      body: payload
-    }).then((createResponse) => {
-      const bookingId = createResponse.body.bookingid
+      url: 'https://restful-booker.herokuapp.com/auth',
+      body: {
+        username: 'admin',
+        password: 'password123'
+      }
+    }).then((authResponse) => {
+      expect(authResponse.status).to.eq(200)
+      const token = authResponse.body.token
 
       cy.request({
-        method: 'DELETE',
-        url: `https://restful-booker.herokuapp.com/booking/${bookingId}`,
-        auth: {
-          username: 'admin',
-          password: 'password123'
-        },
-        failOnStatusCode: false
-      }).then((deleteResponse) => {
-        expect([201, 204]).to.include(deleteResponse.status)
+        method: 'POST',
+        url: 'https://restful-booker.herokuapp.com/booking',
+        body: payload
+      }).then((createResponse) => {
+        const bookingId = createResponse.body.bookingid
 
         cy.request({
-          method: 'GET',
+          method: 'DELETE',
           url: `https://restful-booker.herokuapp.com/booking/${bookingId}`,
+          headers: {
+            Cookie: `token=${token}`
+          },
           failOnStatusCode: false
-        }).then((getResponse) => {
-          expect(getResponse.status).to.eq(404)
+        }).then((deleteResponse) => {
+          expect([201, 204]).to.include(deleteResponse.status)
+
+          cy.request({
+            method: 'GET',
+            url: `https://restful-booker.herokuapp.com/booking/${bookingId}`,
+            failOnStatusCode: false
+          }).then((getResponse) => {
+            expect(getResponse.status).to.eq(404)
+          })
         })
       })
     })
