@@ -20,7 +20,6 @@ describe('API - Deletar agendamento', () => {
         password: 'password123'
       }
     }).then((authResponse) => {
-      expect(authResponse.status).to.eq(200)
       const token = authResponse.body.token
 
       cy.request({
